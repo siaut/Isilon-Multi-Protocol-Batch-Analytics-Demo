@@ -5,6 +5,7 @@ This is a demonstration to show that data can be ingested into Isilon via differ
 
 ### Setup:
 #### 1. Setup Hortonworks and Isilon with this [guide](https://www.emc.com/collateral/TechnicalDocument/docu71396.pdf).
+Install Hive, Spark, NiFi and Zeppelin.
 #### 2. Create a new user in Isilon.
 	isi auth groups create hduser2 --zone hdpzonename --provider local
 	isi auth users create hduser2 --primary-group hduser2 \
@@ -20,11 +21,10 @@ This is a demonstration to show that data can be ingested into Isilon via differ
 	su - hduser2
 	hadoop fs -mkdir -p sales_data/transactiontable
 
-	beeline -u jdbc:hive2://pnode1.pgen6.local:10000/appview  -n hduser2
+	beeline -u jdbc:hive2://<hadoopnode>:10000/appview  -n hduser2
 	create database appdb;
 	use appdb;
-	
-	
+		
 	DROP TABLE IF EXISTS transactiontable;
 	CREATE EXTERNAL TABLE transactiontable
 	(
@@ -36,4 +36,25 @@ This is a demonstration to show that data can be ingested into Isilon via differ
 	)
 	ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 	LOCATION '/user/hduser2/sales_data/transactiontable';
+#### 5. Create NiFi Flow with this template:
+	HDP-500_Ingest_data_into_Isilon_via_SFTP_and_NFS.xml
+#### 6. Configure FTP access in Isilon.
+#### 7. Configure NFS export in Isilon.
+Example NFS path -> /ifs/<accesszone>/hadoop/user/hduser2/sales_data/transactiontable
+	SSH to Hadoop node to mount the NFS.
+	mount -t nfs <smartconnectaccesszone>:/transactiontable /mnt/hdp-nfs
+#### 8. Create SMB share in Isilon.
+Example SMB path -> /ifs/<accesszone>/hadoop/user/hduser2/sales_data/transactiontable
+	
+#### 9. Install NiFi in a Windows server.
+	Start NiFi -> C:\nifi-xxx\bin\run-nifi.bat
+Map Network drive to Z: with the SMB share from Isilon.
+Create NiFi Flow with this template:
+	HDP-H500_ingest_data_into_Isilon_via_SMB.xml
+Execute this batch file: moveFileToShareFolder.bat
+	
+
+
+	
+	
 	
