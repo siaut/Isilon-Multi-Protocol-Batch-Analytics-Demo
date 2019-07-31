@@ -3,7 +3,7 @@ This is a demonstration to show that data can be ingested into Isilon via differ
 
 ![Diagram](/Isilon-Multi-Protocol-Batch-Analytics.png)
 
-### Setup:
+### Setup Environment:
 #### 1. Setup Hortonworks and Isilon with this [guide](https://www.emc.com/collateral/TechnicalDocument/docu71396.pdf).
 Install Hive, Spark, NiFi and Zeppelin.
 #### 2. Create a new user in Isilon.
@@ -36,7 +36,7 @@ Install Hive, Spark, NiFi and Zeppelin.
 	)
 	ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 	LOCATION '/user/hduser2/sales_data/transactiontable';
-#### 5. Create NiFi Flow with this template:
+#### 5. Create a NiFi Flow with this template (HDP-NiFi):
 	HDP-500_Ingest_data_into_Isilon_via_SFTP_and_NFS.xml
 #### 6. Configure FTP access in Isilon.
 #### 7. Configure NFS export in Isilon.
@@ -46,15 +46,23 @@ Example NFS path -> /ifs/<accesszone>/hadoop/user/hduser2/sales_data/transaction
 #### 8. Create SMB share in Isilon.
 Example SMB path -> /ifs/<accesszone>/hadoop/user/hduser2/sales_data/transactiontable
 	
-#### 9. Install NiFi in a Windows server.
+#### 9. Install NiFi in a Windows server (Win-NiFi).
 	Start NiFi -> C:\nifi-xxx\bin\run-nifi.bat
 Map Network drive to Z: with the SMB share from Isilon.
 
-Create NiFi Flow with this template:
+Create a NiFi Flow with this template:
 	HDP-H500_ingest_data_into_Isilon_via_SMB.xml
 	
 Execute this batch file: moveFileToShareFolder.bat
-	
+#### 10. Configure Zeppelin to analyze the data.
+Open Zeppelin WebUI: http://hadoopnode:9995
+Import note: Isilon Data Lake Demo.json
+
+### Demo:
+#### 1. Start HDP-NiFi Flow and Win-NiFi Flow:
+	http://<hadoopnode>:8080/nifi
+	http://<windowserver>:8080/nifi
+#### 2. Open Zeppelin and run the note.
 
 
 	
