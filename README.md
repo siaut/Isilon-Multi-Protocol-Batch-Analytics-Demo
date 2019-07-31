@@ -56,6 +56,7 @@ Create a NiFi Flow with this template:
 Execute this batch file: moveFileToShareFolder.bat
 #### 10. Configure Zeppelin to analyze the data.
 Open Zeppelin WebUI: http://hadoopnode:9995
+
 Import note: Isilon Data Lake Demo.json
 
 ### Demo:
