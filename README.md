@@ -49,8 +49,10 @@ Example SMB path -> /ifs/<accesszone>/hadoop/user/hduser2/sales_data/transaction
 #### 9. Install NiFi in a Windows server.
 	Start NiFi -> C:\nifi-xxx\bin\run-nifi.bat
 Map Network drive to Z: with the SMB share from Isilon.
+
 Create NiFi Flow with this template:
 	HDP-H500_ingest_data_into_Isilon_via_SMB.xml
+	
 Execute this batch file: moveFileToShareFolder.bat
 	
 
