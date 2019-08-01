@@ -63,9 +63,4 @@ Import note: Isilon Data Lake Demo.json
 #### 1. Start HDP-NiFi Flow and Win-NiFi Flow:
 	http://<hadoopnode>:8080/nifi
 	http://<windowserver>:8080/nifi
-#### 2. Open Zeppelin and run the note.
-
-
-	
-	
-	
+#### 2. Open Zeppelin and run the note: Isilon Data Lake Demo
