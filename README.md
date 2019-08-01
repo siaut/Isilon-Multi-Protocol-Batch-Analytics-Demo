@@ -5,7 +5,7 @@ This is a demonstration to show that data can be ingested into Isilon via differ
 
 ### Setup Environment:
 #### 1. Setup Hortonworks and Isilon with this [guide](https://www.emc.com/collateral/TechnicalDocument/docu71396.pdf).
-Install Hive, Spark, NiFi and Zeppelin.
+During the Hortonworks HDP installation, include Hive, Spark, NiFi and Zeppelin.
 #### 2. Create a new user in Isilon.
 	isi auth groups create hduser2 --zone hdpzonename --provider local
 	isi auth users create hduser2 --primary-group hduser2 \
