@@ -1,0 +1,77 @@
+<html>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145007542-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-145007542-1');
+</script>
+
+  </head>
+
+
+<h1>Isilon Multi Protocol Batch Analytics Demo</h1>
+<p>This is a demonstration to show that data can be ingested into Isilon via different protocols such as SFTP, NFS and SMB, after that we could use Spark to analyze the data from a Hadoop cluster connected to Isilon via HDFS.</p>
+<p><a href="https://github.com/siaut/Isilon-Multi-Protocol-Batch-Analytics-Demo/blob/master/Isilon-Multi-Protocol-Batch-Analytics.png" target="_blank" rel="noopener noreferrer"><img src="https://github.com/siaut/Isilon-Multi-Protocol-Batch-Analytics-Demo/raw/master/Isilon-Multi-Protocol-Batch-Analytics.png" alt="Diagram" /></a></p>
+<h3>Setup Environment:</h3>
+<h4>1. Setup Hortonworks and Isilon with this&nbsp;<a href="https://www.emc.com/collateral/TechnicalDocument/docu71396.pdf" rel="nofollow">guide</a>.</h4>
+<p>During the Hortonworks HDP installation, include Hive, Spark, NiFi and Zeppelin.</p>
+<h4>2. Create a new user in Isilon.</h4>
+<pre><code>isi auth groups create hduser2 --zone hdpzonename --provider local
+isi auth users create hduser2 --primary-group hduser2 \
+--zone hdpzonename --provider local \
+--home-directory /ifs/hdpzonename/hdp/hadoop/user/hduser2
+</code></pre>
+<h4>3. Create user in Hadoop node.</h4>
+<pre><code>useradd -u 2004 hduser2
+sudo -u hdfs hdfs dfs -mkdir -p /user/hduser2
+sudo -u hdfs hdfs dfs -chown hduser2:hduser2 /user/hduser2
+sudo -u hdfs hdfs dfs -chmod 755 /user/hduser2
+</code></pre>
+<h4>4. Create a new database in Hive.</h4>
+<pre><code>SSH to Hadoop node.
+su - hduser2
+hadoop fs -mkdir -p sales_data/transactiontable
+beeline -u jdbc:hive2://&lt;hadoopnode&gt;:10000/appview -n hduser2
+create database appdb;
+use appdb;
+DROP TABLE IF EXISTS transactiontable;
+CREATE EXTERNAL TABLE transactiontable
+(
+ transdate Timestamp,
+ ipaddr STRING,
+ platform INT,
+ itemid INT,
+ quantity INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+LOCATION '/user/hduser2/sales_data/transactiontable';
+</code></pre>
+<h4>5. Create a NiFi Flow with this template (HDP-NiFi):</h4>
+<pre><code>HDP-500_Ingest_data_into_Isilon_via_SFTP_and_NFS.xml
+</code></pre>
+<h4>6. Configure FTP access in Isilon.</h4>
+<h4>7. Configure NFS export in Isilon.</h4>
+<p>Example NFS path -&gt; /ifs//hadoop/user/hduser2/sales_data/transactiontable SSH to Hadoop node to mount the NFS. mount -t nfs :/transactiontable /mnt/hdp-nfs</p>
+<h4>8. Create SMB share in Isilon.</h4>
+<p>Example SMB path -&gt; /ifs//hadoop/user/hduser2/sales_data/transactiontable</p>
+<h4>9. Install NiFi in a Windows server (Win-NiFi).</h4>
+<pre><code>Start NiFi -&gt; C:\nifi-xxx\bin\run-nifi.bat
+</code></pre>
+<p>Map Network drive to Z: with the SMB share from Isilon.</p>
+<p>Create a NiFi Flow with this template: HDP-H500_ingest_data_into_Isilon_via_SMB.xml</p>
+<p>Execute this batch file: moveFileToShareFolder.bat</p>
+<h4>10. Configure Zeppelin to analyze the data.</h4>
+<p>Open Zeppelin WebUI:&nbsp;<a href="http://hadoopnode:9995/" rel="nofollow">http://hadoopnode:9995</a></p>
+<p>Import note: Isilon Data Lake Demo.json</p>
+<h3>Demo:</h3>
+<h4>1. Start HDP-NiFi Flow and Win-NiFi Flow:</h4>
+<pre><code>http://&lt;hadoopnode&gt;:8080/nifi
+http://&lt;windowserver&gt;:8080/nifi
+</code></pre>
+<h4>2. Open Zeppelin and run the note: Isilon Data Lake Demo</h4>
+</html>
+
