@@ -2,3 +2,5 @@
 theme: jekyll-theme-slate
 # Google Analytics
 google_analytics: UA-145007542-1
+plugins:
+  - jekyll-mentions
