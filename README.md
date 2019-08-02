@@ -2,7 +2,7 @@
 This is a demonstration to show that data can be ingested into Isilon via different protocols such as SFTP, NFS and SMB, after that we could use Spark to analyze the data from a Hadoop cluster connected to Isilon via HDFS.
 
 ![Diagram](/Isilon-Multi-Protocol-Batch-Analytics.png)
-[![Analytics](https://ga-beacon.appspot.com/UA-145007542-2/Isilon-Multi-Protocol-Batch-Analytics-Demo)](https://github.com/igrigorik/ga-beacon)
+
 
 ### Setup Environment:
 #### 1. Setup Hortonworks and Isilon with this [guide](https://www.emc.com/collateral/TechnicalDocument/docu71396.pdf).
