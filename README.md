@@ -1,5 +1,5 @@
 # Isilon Multi Protocol Batch Analytics Demo
-This is a demonstration to show that data can be ingested into Isilon via different protocols such as SFTP, NFS and SMB, after that we could use Spark to analyze the data from a Hadoop cluster connected to Isilon via HDFS.
+This is a demonstration to show that data can be ingested into Isilon via different protocols such as SFTP, NFS and SMB, after that we could use Spark to analyze the data from a Hadoop cluster connected to Isilon via HDFS. Here is a [demo video](https://youtu.be/GsiCoBoUg4A)
 
 ![Diagram](/Isilon-Multi-Protocol-Batch-Analytics.png)
 
@@ -65,4 +65,4 @@ Import note: Isilon Data Lake Demo.json
 	http://<hadoopnode>:8080/nifi
 	http://<windowserver>:8080/nifi
 #### 2. Open Zeppelin and run the note: Isilon Data Lake Demo
-#### 3. Here is a [video demo](https://youtu.be/GsiCoBoUg4A)
+#### 3. Here is a [demo video](https://youtu.be/GsiCoBoUg4A)
