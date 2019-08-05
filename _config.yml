@@ -5,4 +5,4 @@ google_analytics: UA-145007542-1
 plugins:
   - jekyll-mentions
 include:
-  - install.md
+  - README.md
