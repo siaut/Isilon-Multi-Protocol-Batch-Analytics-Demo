@@ -65,3 +65,4 @@ Import note: Isilon Data Lake Demo.json
 	http://<hadoopnode>:8080/nifi
 	http://<windowserver>:8080/nifi
 #### 2. Open Zeppelin and run the note: Isilon Data Lake Demo
+#### 3. Here is a [video demo](https://youtu.be/GsiCoBoUg4A)
